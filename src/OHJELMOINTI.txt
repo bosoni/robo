@@ -1,0 +1,76 @@
+Hieman l‰hdekoodista:
+
+Main::Main()
+ lataa config.cfg pelihakemistosta, jossa m‰‰ritell‰‰n ohjelman k‰ytt‰m‰t muut hakemistot, ohjelman nimi ja resoluutio.
+
+Game::init()
+  loadAnimInfo() lataa anim.cfg, saadaan animaatiotiedot talteen (animaatioita ei ladata, ne myˆhemmin scriptiss‰).
+  Ladataan myˆs start.sc jossa ohjelma aloitetaan. scriptiin voi ohjelmoida alkudemot, pelin asetukset ym ja ladata vaikka aloitusruudun scriptin ja aloittaa peli.
+
+Loopissa kutsutaan repaint() jolloin kutsutaan paintComponent(), otetaan g2d ja sitten suoritetaan pelin piirt‰miset game.run();
+
+game.run() piirt‰‰ taustan, huoneen, tavarat, oman ukon, hiirikursorin ja scriptin joka framella piirrett‰t kuvat - scriptin render() funktio.
+JOKAISESSA SCRIPTISSƒ PITƒƒ OLLA render() FUNKTIO!
+
+everyroom.sc ladataan myˆs alussa, se pysyy muistissa ja suoritetaan joka huoneessa.
+
+---
+Taulukoita:
+ action["joku_teksti"]=jotain;
+ inventory
+ 
+
+
+scriptiss‰ toimivat komennot:
+ MessageBox( string );  --n‰ytt‰‰ tekstin avautuvassa ikkunassa
+ delay( ms );  --odottaa ms ajan
+ endGame();   -- lopettaa ohjelman
+ loadRoom( roomName, position ) -- lataa huone ja aseta ukko position-kohtaan
+ loadImage( fileName, name ) -- lataa kuva, name nimisen‰ k‰ytet‰‰n
+ loadCursor( fileName, name ) -- lataa hiirikursori
+ playMidi( fileName ) -- lataa ja soittaa midin
+ message( font_size, x, y, str, waitMousePressed ) -- kirjoita tekstit ruudulle, odottaako hiiren painallusta
+ * jos x==-1 keskit‰ x-suunnassa
+ * jos y==-1 keskit‰ y-suunnassa
+
+ loadAnimation( animName ) -- lataa animName animaation
+ setAnimation( objectName, up,down,left,right ) -- aseta animaatiolle suunnat
+ updateAnimation( objectName, yp ) -- p‰ivitt‰‰ objektin animaation ja kohdan ruudulla (hienos‰‰tˆ +yp)
+ drawImage( x, y, name, yp ) -- piirr‰ name x,y kohtaan (hienos‰‰tˆ +yp)
+
+ setPath( objectName, pathName, walkMode ) -- aseta objektille reitti
+ * jos walkMode
+ * 0, h‰vi‰‰ ruudulta
+ * 1, palaa samaa reitti‰ takas
+ * 2, niin reitin alkuun.
+ * 3, j‰‰ viimeiseen vertexin kohtaan
+
+ drawAnimImage( objectName, YP ) -- piirr‰ objekti, YP lis‰t‰‰n y:hyn, hienos‰‰tˆ
+
+ using( item, objectName, et‰isyys ) -- palauttaa "1" jos hiiren‰ on haluttu kursori (item) ja
+   objecti on max et‰isyyden p‰‰ss‰ ukosta.
+ (everyroom.sc:ss‰ k‰yttˆ kun tarkistetaan osutaanko rottaan, en kerro mill‰)
+
+ setEGO( n‰kyykˆ ) -- jos 0, ohjattavaa tyyppi‰ ei piirret‰.
+
+
+
+K‰‰nt‰minen:
+
+Peli k‰ytt‰‰ fscripti‰, laitoin mukaan 1.6_Fscript.jar (java 6)
+ja FScript.jar (java 5).
+Jos k‰yt‰t 1.6 versiota, nime‰ se FScript.jar:ksi.
+
+data/ hakemistossa on kuvat, animaatiot ja skriptit.
+src/ hakemistosta lˆyd‰t .java l‰hdekoodit.
+
+Netbeans 5.5 asetukset:
+luo uusi projekti (ei main classia).
+project properties: 
+  Sources -> Add folder -> src
+  Sources -> Add folder -> data
+  Libraries -> Add JAR/Folder ja valitse FScript.jar
+
+F6 ja pit‰is l‰hte‰ p‰‰lle. F11 niin netbeans luo jar paketin joka
+menee dist/ hakemistoon.
+
